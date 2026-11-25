@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="SignedLongTests/SignedLongTests.vcxproj" />
+  <Project Path="длинное целое/длинное целое.vcxproj" />
+</Solution>

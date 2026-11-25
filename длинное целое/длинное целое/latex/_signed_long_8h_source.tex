@@ -1,0 +1,87 @@
+\doxysection{Signed\+Long.\+h}
+\hypertarget{_signed_long_8h_source}{}\label{_signed_long_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }SignedLong\ \{}
+\DoxyCodeLine{00014\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}*\ digits;\ \ \ \ \ \ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ length;\ \ \ \ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{int}\ sign;\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ normalize();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}*\ copyDigits(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}*\ src,\ \textcolor{keywordtype}{size\_t}\ len);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ compareAbs(\textcolor{keyword}{const}\ SignedLong\&\ a,\ \textcolor{keyword}{const}\ SignedLong\&\ b);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ SignedLong\ addAbs(\textcolor{keyword}{const}\ SignedLong\&\ a,\ \textcolor{keyword}{const}\ SignedLong\&\ b);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{static}\ SignedLong\ subAbs(\textcolor{keyword}{const}\ SignedLong\&\ a,\ \textcolor{keyword}{const}\ SignedLong\&\ b);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ SignedLong(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ val\ =\ 0LL);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{explicit}\ SignedLong(\textcolor{keyword}{const}\ std::string\&\ str);}
+\DoxyCodeLine{00029\ \ \ \ \ SignedLong(\textcolor{keyword}{const}\ SignedLong\&\ other);}
+\DoxyCodeLine{00030\ \ \ \ \ SignedLong\&\ operator=(\textcolor{keyword}{const}\ SignedLong\&\ other);}
+\DoxyCodeLine{00031\ \ \ \ \ \string~SignedLong();}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{explicit}\ \textcolor{keyword}{operator}\ \textcolor{keywordtype}{long}\ long()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ SignedLong\ operator-\/()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ SignedLong\&\ operator+=(\textcolor{keyword}{const}\ SignedLong\&\ rhs);}
+\DoxyCodeLine{00039\ \ \ \ \ SignedLong\ operator+(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ SignedLong\&\ operator-\/=(\textcolor{keyword}{const}\ SignedLong\&\ rhs);}
+\DoxyCodeLine{00042\ \ \ \ \ SignedLong\ operator-\/(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ SignedLong\&\ operator*=(\textcolor{keyword}{const}\ SignedLong\&\ rhs);}
+\DoxyCodeLine{00045\ \ \ \ \ SignedLong\ operator*(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ SignedLong\&\ operator/=(\textcolor{keyword}{const}\ SignedLong\&\ rhs);}
+\DoxyCodeLine{00048\ \ \ \ \ SignedLong\ operator/(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ SignedLong\&\ operator+=(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs);}
+\DoxyCodeLine{00053\ \ \ \ \ SignedLong\ operator+(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ SignedLong\&\ operator-\/=(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs);}
+\DoxyCodeLine{00056\ \ \ \ \ SignedLong\ operator-\/(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ SignedLong\&\ operator*=(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs);}
+\DoxyCodeLine{00059\ \ \ \ \ SignedLong\ operator*(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ SignedLong\&\ operator/=(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs);}
+\DoxyCodeLine{00062\ \ \ \ \ SignedLong\ operator/(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ SignedLong\&\ operator++();}
+\DoxyCodeLine{00067\ \ \ \ \ SignedLong\ operator++(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ SignedLong\&\ operator-\/-\/();}
+\DoxyCodeLine{00070\ \ \ \ \ SignedLong\ operator-\/-\/(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Сравнение\ с\ другим\ SignedLong}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<=(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ SignedLong\&\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Сравнение\ с\ обычным\ целым\ числом\ (long\ long)}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator<=(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ rhs)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{friend}\ std::ostream\&\ operator<<(std::ostream\&\ os,\ \textcolor{keyword}{const}\ SignedLong\&\ num);}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{friend}\ std::istream\&\ operator>>(std::istream\&\ is,\ SignedLong\&\ num);}
+\DoxyCodeLine{00090\ \};}
+
+\end{DoxyCode}

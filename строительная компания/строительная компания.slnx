@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Элементы решения/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="UnitTest1/UnitTest1.vcxproj" />
+  <Project Path="строительная компания/строительная компания.vcxproj" Id="bfb5dd3b-1a64-48c5-9cc4-ebfc49c47b7b" />
+</Solution>

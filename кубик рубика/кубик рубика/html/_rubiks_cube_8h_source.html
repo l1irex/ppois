@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>�RubiksCube�: Исходный файл RubiksCube.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">�RubiksCube�
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Поиск" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_rubiks_cube_8h_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">RubiksCube.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_rubiks_cube_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef RUBIKS_CUBE_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define RUBIKS_CUBE_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span></div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_rubiks_cube.html">   14</a></span><span class="keyword">class </span><a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_rubiks_cube.html#a47b3402b464e74f9667cb4f657ceb11d">   16</a></span>    <span class="keywordtype">int</span>* <a class="code hl_variable" href="class_rubiks_cube.html#a47b3402b464e74f9667cb4f657ceb11d">colors</a>; </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_rubiks_cube.html#ac65e7672cca05c2a0aa09471a0735987">   18</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="class_rubiks_cube.html#ac65e7672cca05c2a0aa09471a0735987">SIZE</a> = 54;      </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_rubiks_cube.html#a4be2e3685d994a1d0133faf8eba459e7">   19</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="class_rubiks_cube.html#a4be2e3685d994a1d0133faf8eba459e7">FACE_SIZE</a> = 9; </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_rubiks_cube.html#a04f168550d8bf37b35b7acee5688053d">   20</a></span>    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="class_rubiks_cube.html#a04f168550d8bf37b35b7acee5688053d">NUM_FACES</a> = 6;  </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_rubiks_cube.html#a096d4d9e709767ad0fd21d1abd207633">rotateFaceData</a>(<span class="keywordtype">int</span> faceIndex, <span class="keywordtype">bool</span> clockwise);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_rubiks_cube.html#a436b8d3852e9f67e073b37b6c1a3df44">shiftEdgesCycle</a>(<span class="keyword">const</span> <span class="keywordtype">int</span>* p1, <span class="keyword">const</span> <span class="keywordtype">int</span>* p2, <span class="keyword">const</span> <span class="keywordtype">int</span>* p3, <span class="keyword">const</span> <span class="keywordtype">int</span>* p4, <span class="keywordtype">bool</span> clockwise);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_rubiks_cube.html#afcede0d83dc129da368c50599135f2dc">rotateEdges</a>(<span class="keywordtype">int</span> faceIndex, <span class="keywordtype">bool</span> clockwise);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rubiks_cube.html#a56bc0ffe422c27bd5ae485f5d20d87a2">isValidColor</a>(<span class="keywordtype">int</span> color) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>&amp; other);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>&amp; <a class="code hl_function" href="class_rubiks_cube.html#a855a6f4d1279ea54ed17e6931598b273">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>&amp; other);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">~RubiksCube</a>();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_rubiks_cube.html#a5c7cbdc236c606d6d1e0c520e2f11ca7">scramble</a>(<span class="keywordtype">int</span> moves = 20);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_rubiks_cube.html#aa304626a01d3e8939fd2f42e5500e496">rotateFace</a>(<span class="keywordtype">int</span> faceIndex, <span class="keywordtype">bool</span> clockwise);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rubiks_cube.html#a90dd1b5b6ec65178b20ff86b0706634a">isSolved</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">int</span> <a class="code hl_function" href="class_rubiks_cube.html#a70ff2c26fcbdeaea329bb2ec5cbe6342">getColor</a>(<span class="keywordtype">int</span> index) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rubiks_cube.html#affe07c6f7db808c5ee06de55bbc0d0da">loadFromFile</a>(<span class="keyword">const</span> std::string&amp; filename);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rubiks_cube.html#ae1a5946194c2fb38ca17f6c54b77f818">operator==</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>&amp; other) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_rubiks_cube.html#a31fa8b880a138af2745b2b2e4c9b7fe6">operator!=</a>(<span class="keyword">const</span> <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>&amp; other) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">friend</span> std::ostream&amp; <a class="code hl_friend" href="class_rubiks_cube.html#a148776f92ba88b6d2de4da939b72c6d8">operator&lt;&lt;</a>(std::ostream&amp; os, <span class="keyword">const</span> <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>&amp; cube);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">friend</span> std::istream&amp; <a class="code hl_friend" href="class_rubiks_cube.html#a99c60d2e0a12cf633bd41c9cdfa47fe3">operator&gt;&gt;</a>(std::istream&amp; is, <a class="code hl_function" href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube</a>&amp; cube);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>};</div>
+</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#endif </span></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a04f168550d8bf37b35b7acee5688053d"><div class="ttname"><a href="class_rubiks_cube.html#a04f168550d8bf37b35b7acee5688053d">RubiksCube::NUM_FACES</a></div><div class="ttdeci">static const int NUM_FACES</div><div class="ttdef"><b>Определения</b> RubiksCube.h:20</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a096d4d9e709767ad0fd21d1abd207633"><div class="ttname"><a href="class_rubiks_cube.html#a096d4d9e709767ad0fd21d1abd207633">RubiksCube::rotateFaceData</a></div><div class="ttdeci">void rotateFaceData(int faceIndex, bool clockwise)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:51</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a148776f92ba88b6d2de4da939b72c6d8"><div class="ttname"><a href="class_rubiks_cube.html#a148776f92ba88b6d2de4da939b72c6d8">RubiksCube::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const RubiksCube &amp;cube)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:230</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a31fa8b880a138af2745b2b2e4c9b7fe6"><div class="ttname"><a href="class_rubiks_cube.html#a31fa8b880a138af2745b2b2e4c9b7fe6">RubiksCube::operator!=</a></div><div class="ttdeci">bool operator!=(const RubiksCube &amp;other) const</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:226</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a436b8d3852e9f67e073b37b6c1a3df44"><div class="ttname"><a href="class_rubiks_cube.html#a436b8d3852e9f67e073b37b6c1a3df44">RubiksCube::shiftEdgesCycle</a></div><div class="ttdeci">void shiftEdgesCycle(const int *p1, const int *p2, const int *p3, const int *p4, bool clockwise)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:76</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a47b3402b464e74f9667cb4f657ceb11d"><div class="ttname"><a href="class_rubiks_cube.html#a47b3402b464e74f9667cb4f657ceb11d">RubiksCube::colors</a></div><div class="ttdeci">int * colors</div><div class="ttdef"><b>Определения</b> RubiksCube.h:16</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a4be2e3685d994a1d0133faf8eba459e7"><div class="ttname"><a href="class_rubiks_cube.html#a4be2e3685d994a1d0133faf8eba459e7">RubiksCube::FACE_SIZE</a></div><div class="ttdeci">static const int FACE_SIZE</div><div class="ttdef"><b>Определения</b> RubiksCube.h:19</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a56bc0ffe422c27bd5ae485f5d20d87a2"><div class="ttname"><a href="class_rubiks_cube.html#a56bc0ffe422c27bd5ae485f5d20d87a2">RubiksCube::isValidColor</a></div><div class="ttdeci">bool isValidColor(int color) const</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:47</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a5c7cbdc236c606d6d1e0c520e2f11ca7"><div class="ttname"><a href="class_rubiks_cube.html#a5c7cbdc236c606d6d1e0c520e2f11ca7">RubiksCube::scramble</a></div><div class="ttdeci">void scramble(int moves=20)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:157</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a70ff2c26fcbdeaea329bb2ec5cbe6342"><div class="ttname"><a href="class_rubiks_cube.html#a70ff2c26fcbdeaea329bb2ec5cbe6342">RubiksCube::getColor</a></div><div class="ttdeci">int getColor(int index) const</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:192</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a855a6f4d1279ea54ed17e6931598b273"><div class="ttname"><a href="class_rubiks_cube.html#a855a6f4d1279ea54ed17e6931598b273">RubiksCube::operator=</a></div><div class="ttdeci">RubiksCube &amp; operator=(const RubiksCube &amp;other)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:29</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a90dd1b5b6ec65178b20ff86b0706634a"><div class="ttname"><a href="class_rubiks_cube.html#a90dd1b5b6ec65178b20ff86b0706634a">RubiksCube::isSolved</a></div><div class="ttdeci">bool isSolved() const</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:177</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_a99c60d2e0a12cf633bd41c9cdfa47fe3"><div class="ttname"><a href="class_rubiks_cube.html#a99c60d2e0a12cf633bd41c9cdfa47fe3">RubiksCube::operator&gt;&gt;</a></div><div class="ttdeci">friend std::istream &amp; operator&gt;&gt;(std::istream &amp;is, RubiksCube &amp;cube)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:277</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_aa304626a01d3e8939fd2f42e5500e496"><div class="ttname"><a href="class_rubiks_cube.html#aa304626a01d3e8939fd2f42e5500e496">RubiksCube::rotateFace</a></div><div class="ttdeci">void rotateFace(int faceIndex, bool clockwise)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:291</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_ac65e7672cca05c2a0aa09471a0735987"><div class="ttname"><a href="class_rubiks_cube.html#ac65e7672cca05c2a0aa09471a0735987">RubiksCube::SIZE</a></div><div class="ttdeci">static const int SIZE</div><div class="ttdef"><b>Определения</b> RubiksCube.h:18</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_ae1a5946194c2fb38ca17f6c54b77f818"><div class="ttname"><a href="class_rubiks_cube.html#ae1a5946194c2fb38ca17f6c54b77f818">RubiksCube::operator==</a></div><div class="ttdeci">bool operator==(const RubiksCube &amp;other) const</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:217</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_ae88ebddd5356ef5767416b5c78d54a3c"><div class="ttname"><a href="class_rubiks_cube.html#ae88ebddd5356ef5767416b5c78d54a3c">RubiksCube::RubiksCube</a></div><div class="ttdeci">RubiksCube()</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:10</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_afcede0d83dc129da368c50599135f2dc"><div class="ttname"><a href="class_rubiks_cube.html#afcede0d83dc129da368c50599135f2dc">RubiksCube::rotateEdges</a></div><div class="ttdeci">void rotateEdges(int faceIndex, bool clockwise)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:97</div></div>
+<div class="ttc" id="aclass_rubiks_cube_html_affe07c6f7db808c5ee06de55bbc0d0da"><div class="ttname"><a href="class_rubiks_cube.html#affe07c6f7db808c5ee06de55bbc0d0da">RubiksCube::loadFromFile</a></div><div class="ttdeci">bool loadFromFile(const std::string &amp;filename)</div><div class="ttdef"><b>Определения</b> RubiksCube.cpp:200</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="_rubiks_cube_8h.html">RubiksCube.h</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>
