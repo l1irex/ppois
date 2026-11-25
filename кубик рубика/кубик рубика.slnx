@@ -3,6 +3,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/Элементы решения/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="RubiksCubeTests/RubiksCubeTests.vcxproj" />
   <Project Path="кубик рубика/кубик рубика.vcxproj" Id="e704b5b2-ca7f-4bf2-bd90-a1d374da592d" />
 </Solution>

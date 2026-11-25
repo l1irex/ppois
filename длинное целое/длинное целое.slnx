@@ -3,6 +3,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/Элементы решения/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="SignedLongTests/SignedLongTests.vcxproj" />
   <Project Path="длинное целое/длинное целое.vcxproj" />
 </Solution>

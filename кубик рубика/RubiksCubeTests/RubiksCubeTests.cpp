@@ -1,212 +1,262 @@
 ﻿#include "pch.h"
 #include "CppUnitTest.h"
-#include "RubiksCube.h"
-#include <sstream>
-#include <fstream>
+
 #include <cstdio>
+#include <fstream>
+#include <sstream>
 #include <string>
+
+#include "RubiksCube.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace RubiksCubeTests
+namespace RubiksCubeCppUnitTests
 {
-	TEST_CLASS(RubiksCubeUnitTests)
-	{
-	public:
-		// 1. Конструктор по умолчанию и проверка собранного состояния
-		TEST_METHOD(DefaultConstructor_CreatesSolvedCube)
-		{
-			RubiksCube cube;
-			Assert::IsTrue(cube.isSolved());
+    TEST_CLASS(CubeStateTests)
+    {
+    public:
+        TEST_METHOD(DefaultConstructor_CreatesSolvedCube)
+        {
+            RubiksCube cube;
 
-			for (int face = 0; face < 6; ++face)
-			{
-				for (int cell = 0; cell < 9; ++cell)
-				{
-					Assert::AreEqual(face, cube.getColor(face * 9 + cell));
-				}
-			}
-		}
+            Assert::IsTrue(cube.isSolved());
 
-		// 2. getColor: корректные индексы и выход за границы
-		TEST_METHOD(GetColor_ValidAndInvalidIndices)
-		{
-			RubiksCube cube;
-			Assert::AreEqual(0, cube.getColor(0));
-			Assert::AreEqual(5, cube.getColor(53));
-			Assert::AreEqual(-1, cube.getColor(-1));
-			Assert::AreEqual(-1, cube.getColor(54));
-		}
+            for (int face = 0; face < 6; ++face)
+            {
+                for (int cell = 0; cell < 9; ++cell)
+                {
+                    Assert::AreEqual(face, cube.getColor(face * 9 + cell));
+                }
+            }
+        }
 
-		// 3. Конструктор копирования и оператор присваивания
-		TEST_METHOD(CopyConstructorAndAssignment_IndependentCopies)
-		{
-			RubiksCube original;
-			original.rotateFace(0, true);
+        TEST_METHOD(GetColor_ReturnsColorOrMinusOneForInvalidIndex)
+        {
+            RubiksCube cube;
 
-			// Конструктор копирования
-			RubiksCube copied(original);
-			Assert::IsTrue(copied == original);
-			Assert::IsFalse(copied != original);
+            Assert::AreEqual(0, cube.getColor(0));
+            Assert::AreEqual(5, cube.getColor(53));
+            Assert::AreEqual(-1, cube.getColor(-1));
+            Assert::AreEqual(-1, cube.getColor(54));
+        }
+    };
 
-			copied.rotateFace(2, true);
-			Assert::IsTrue(copied != original);
-			Assert::IsFalse(copied == original);
+    TEST_CLASS(CopyAndComparisonTests)
+    {
+    public:
+        TEST_METHOD(CopyConstructor_CreatesIndependentState)
+        {
+            RubiksCube original;
+            original.rotateFace(0, true);
 
-			// Оператор присваивания
-			RubiksCube assigned;
-			assigned = original;
-			Assert::IsTrue(assigned == original);
+            RubiksCube copied(original);
+            Assert::IsTrue(copied == original);
 
-			// Самоприсваивание не должно ломать объект
-			assigned = assigned;
-			Assert::IsTrue(assigned == original);
-		}
+            copied.rotateFace(2, true);
+            Assert::IsTrue(copied != original);
+            Assert::IsFalse(copied == original);
+        }
 
-		// 4. Поворот каждой из 6 граней по и против часовой стрелки + 4 поворота = исходное состояние
-		TEST_METHOD(RotateFace_AllFacesClockwiseAndCounterClockwise_FourTimesReturnsToStart)
-		{
-			for (int face = 0; face < 6; ++face)
-			{
-				RubiksCube cube;
-				const RubiksCube initial = cube;
+        TEST_METHOD(AssignmentOperator_HandlesCopyAndSelfAssignment)
+        {
+            RubiksCube original;
+            original.rotateFace(1, true);
+            const RubiksCube expected(original);
 
-				// 4 поворота по часовой стрелке возвращают грань и рёбра на место
-				for (int step = 0; step < 4; ++step)
-				{
-					cube.rotateFace(face, true);
-				}
-				Assert::IsTrue(cube == initial);
+            RubiksCube assigned;
+            assigned = original;
+            Assert::IsTrue(assigned == original);
 
-				// 1 поворот меняет состояние кубика
-				cube.rotateFace(face, true);
-				Assert::IsTrue(cube != initial);
-				Assert::IsFalse(cube.isSolved());
+            assigned = assigned;
+            Assert::IsTrue(assigned == original);
 
-				// Обратный поворот возвращает в исходное состояние
-				cube.rotateFace(face, false);
-				Assert::IsTrue(cube == initial);
-				Assert::IsTrue(cube.isSolved());
-			}
-		}
+            assigned.rotateFace(5, false);
+            Assert::IsTrue(assigned != original);
+            Assert::IsTrue(original == expected);
+        }
+    };
 
-		// 5. Некорректный индекс грани в rotateFace
-		TEST_METHOD(RotateFace_InvalidFaceIndex_DoesNothing)
-		{
-			RubiksCube cube;
-			const RubiksCube initial = cube;
+    TEST_CLASS(RotationTests)
+    {
+    public:
+        TEST_METHOD(RotateFace_FourClockwiseTurnsRestoreState)
+        {
+            for (int face = 0; face < 6; ++face)
+            {
+                RubiksCube cube;
+                const RubiksCube initial = cube;
 
-			cube.rotateFace(-1, true);
-			cube.rotateFace(6, false);
+                for (int step = 0; step < 4; ++step)
+                {
+                    cube.rotateFace(face, true);
+                }
 
-			Assert::IsTrue(cube == initial);
-		}
+                Assert::IsTrue(cube == initial);
+            }
+        }
 
-		// 6. Перемешивание (scramble)
-		TEST_METHOD(Scramble_PositiveAndNonPositiveMoves)
-		{
-			RubiksCube cube;
-			const RubiksCube initial = cube;
+        TEST_METHOD(RotateFace_OppositeTurnsCancelEachOther)
+        {
+            for (int face = 0; face < 6; ++face)
+            {
+                RubiksCube cube;
+                const RubiksCube initial = cube;
 
-			// Неположительное число ходов не должно менять кубик
-			cube.scramble(0);
-			Assert::IsTrue(cube == initial);
-			cube.scramble(-5);
-			Assert::IsTrue(cube == initial);
+                cube.rotateFace(face, true);
+                Assert::IsTrue(cube != initial);
+                Assert::IsFalse(cube.isSolved());
 
-			// Перемешивание на 25 ходов меняет собранный кубик
-			cube.scramble(25);
-			Assert::IsTrue(cube != initial);
-			Assert::IsFalse(cube.isSolved());
-		}
+                cube.rotateFace(face, false);
+                Assert::IsTrue(cube == initial);
+                Assert::IsTrue(cube.isSolved());
+            }
+        }
 
-		// 7. Потоковый ввод/вывод (>> и <<)
-		TEST_METHOD(StreamOperators_ReadAndWriteCube)
-		{
-			RubiksCube source;
-			source.rotateFace(1, true);
-			source.rotateFace(5, false);
+        TEST_METHOD(RotateFace_InvalidIndexDoesNothing)
+        {
+            RubiksCube cube;
+            const RubiksCube initial = cube;
 
-			std::ostringstream oss;
-			oss << source;
-			const std::string output = oss.str();
+            cube.rotateFace(-1, true);
+            cube.rotateFace(6, false);
 
-			Assert::IsFalse(output.empty());
-			Assert::IsTrue(output.find("0 ") != std::string::npos);
-			Assert::IsTrue(output.find("5 ") != std::string::npos);
+            Assert::IsTrue(cube == initial);
+        }
+    };
 
-			// Формируем поток из 54 корректных чисел
-			std::ostringstream rawColors;
-			for (int i = 0; i < 54; ++i)
-			{
-				rawColors << source.getColor(i) << (i + 1 < 54 ? " " : "");
-			}
+    TEST_CLASS(ScrambleTests)
+    {
+    public:
+        TEST_METHOD(Scramble_NonPositiveMovesDoNothing)
+        {
+            RubiksCube cube;
+            const RubiksCube initial = cube;
 
-			std::istringstream iss(rawColors.str());
-			RubiksCube loaded;
-			Assert::IsTrue(static_cast<bool>(iss >> loaded));
-			Assert::IsTrue(loaded == source);
-		}
+            cube.scramble(0);
+            Assert::IsTrue(cube == initial);
 
-		// 8. Некорректные данные при чтении из потока
-		TEST_METHOD(StreamInputOperator_InvalidData_SetsFailbitAndKeepsCubeIntact)
-		{
-			RubiksCube cube;
-			const RubiksCube initial = cube;
+            cube.scramble(-5);
+            Assert::IsTrue(cube == initial);
+        }
 
-			// Неверный код цвета (9)
-			std::string badColorData;
-			for (int i = 0; i < 53; ++i) badColorData += "0 ";
-			badColorData += "9";
+        TEST_METHOD(Scramble_PositiveMovesChangeState)
+        {
+            RubiksCube cube;
+            const RubiksCube initial = cube;
 
-			std::istringstream issBadColor(badColorData);
-			issBadColor >> cube;
-			Assert::IsTrue(issBadColor.fail());
-			Assert::IsTrue(cube == initial);
+            cube.scramble(1);
+            Assert::IsTrue(cube != initial);
+            Assert::IsFalse(cube.isSolved());
 
-			// Недостаточно чисел
-			std::istringstream issShort("0 1 2 3");
-			issShort >> cube;
-			Assert::IsTrue(issShort.fail());
-			Assert::IsTrue(cube == initial);
-		}
+            cube.scramble(25);
+            Assert::IsTrue(cube != initial);
+        }
+    };
 
-		// 9. Загрузка из файла (успешная, несуществующий файл, битый файл)
-		TEST_METHOD(LoadFromFile_ValidInvalidAndMissingFile)
-		{
-			const std::string validFile = "test_cube_valid.txt";
-			const std::string invalidFile = "test_cube_invalid.txt";
-			const std::string missingFile = "non_existent_cube_file_12345.txt";
+    TEST_CLASS(StreamAndFileTests)
+    {
+    public:
+        TEST_METHOD(StreamOutput_WritesStateAndFaceLegend)
+        {
+            RubiksCube cube;
+            cube.rotateFace(1, true);
 
-			RubiksCube expected;
-			expected.rotateFace(3, true);
-			expected.rotateFace(4, false);
+            std::ostringstream output;
+            output << cube;
+            const std::string text = output.str();
 
-			{
-				std::ofstream out(validFile);
-				for (int i = 0; i < 54; ++i)
-				{
-					out << expected.getColor(i) << " ";
-				}
-			}
+            Assert::IsFalse(text.empty());
+            Assert::IsTrue(text.find("0 ") != std::string::npos);
+            Assert::IsTrue(text.find("5 ") != std::string::npos);
+            Assert::IsTrue(text.find("(Up)") != std::string::npos);
+        }
 
-			RubiksCube cube;
-			Assert::IsTrue(cube.loadFromFile(validFile));
-			Assert::IsTrue(cube == expected);
+        TEST_METHOD(StreamInput_ReadsValidState)
+        {
+            RubiksCube source;
+            source.rotateFace(3, true);
+            source.rotateFace(4, false);
 
-			// Несуществующий файл возвращает false
-			Assert::IsFalse(cube.loadFromFile(missingFile));
+            std::ostringstream rawColors;
+            for (int i = 0; i < 54; ++i)
+            {
+                rawColors << source.getColor(i) << (i + 1 < 54 ? " " : "");
+            }
 
-			// Битый файл возвращает false и не портит текущее состояние
-			{
-				std::ofstream badOut(invalidFile);
-				badOut << "0 1 2 abc";
-			}
-			Assert::IsFalse(cube.loadFromFile(invalidFile));
-			Assert::IsTrue(cube == expected);
+            std::istringstream input(rawColors.str());
+            RubiksCube loaded;
 
-			std::remove(validFile.c_str());
-			std::remove(invalidFile.c_str());
-		}
-	};
+            Assert::IsTrue(static_cast<bool>(input >> loaded));
+            Assert::IsTrue(loaded == source);
+        }
+
+        TEST_METHOD(StreamInput_InvalidDataSetsFailbitAndKeepsState)
+        {
+            RubiksCube cube;
+            const RubiksCube initial = cube;
+
+            std::string badColorData;
+            for (int i = 0; i < 53; ++i)
+            {
+                badColorData += "0 ";
+            }
+            badColorData += "9";
+
+            std::istringstream badColorInput(badColorData);
+            badColorInput >> cube;
+            Assert::IsTrue(badColorInput.fail());
+            Assert::IsTrue(cube == initial);
+
+            std::istringstream shortInput("0 1 2 3");
+            shortInput >> cube;
+            Assert::IsTrue(shortInput.fail());
+            Assert::IsTrue(cube == initial);
+        }
+
+        TEST_METHOD(LoadFromFile_ValidAndMissingFile)
+        {
+            const std::string validFile = "rubiks_cube_valid.txt";
+            const std::string missingFile = "rubiks_cube_missing_file_12345.txt";
+
+            RubiksCube expected;
+            expected.rotateFace(3, true);
+            expected.rotateFace(4, false);
+
+            {
+                std::ofstream output(validFile);
+                for (int i = 0; i < 54; ++i)
+                {
+                    output << expected.getColor(i) << " ";
+                }
+            }
+
+            RubiksCube cube;
+            Assert::IsTrue(cube.loadFromFile(validFile));
+            Assert::IsTrue(cube == expected);
+
+            Assert::IsFalse(cube.loadFromFile(missingFile));
+            Assert::IsTrue(cube == expected);
+
+            std::remove(validFile.c_str());
+        }
+
+        TEST_METHOD(LoadFromFile_InvalidFileKeepsState)
+        {
+            const std::string invalidFile = "rubiks_cube_invalid.txt";
+
+            RubiksCube cube;
+            cube.rotateFace(2, true);
+            const RubiksCube initial = cube;
+
+            {
+                std::ofstream output(invalidFile);
+                output << "0 1 2 abc";
+            }
+
+            Assert::IsFalse(cube.loadFromFile(invalidFile));
+            Assert::IsTrue(cube == initial);
+
+            std::remove(invalidFile.c_str());
+        }
+    };
 }

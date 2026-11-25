@@ -147,10 +147,17 @@ namespace {
         schedule.addTask(task);
         assert(approxEqual(schedule.getProgress(), 100.0));
         assert(schedule.countDoneTasks() == 1);
-        schedule.passDays(12);
-        assert(schedule.late);
-        schedule.addPlanDays(5);
-        assert(!schedule.late);
+
+        WorkSchedule lateSchedule;
+        lateSchedule.planDays = 10;
+        Task unfinishedTask;
+        unfinishedTask.days = 10;
+        unfinishedTask.addProgress(40.0);
+        lateSchedule.addTask(unfinishedTask);
+        lateSchedule.passDays(12);
+        assert(lateSchedule.late);
+        lateSchedule.addPlanDays(5);
+        assert(!lateSchedule.late);
 
         Site site;
         site.id = "S-1";
@@ -469,7 +476,7 @@ namespace {
         MaterialRequirement req;
         req.material = cement;
         req.requiredQty = 50.0;
-        assert(approxEqual(req.missingQty(stock), 0.0));
+        assert(approxEqual(req.missingQty(stock), 20.0));
         req.fulfillFromStock(stock);
         assert(req.fulfilled);
         assert(stock.needOrder());

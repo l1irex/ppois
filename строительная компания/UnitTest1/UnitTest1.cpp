@@ -143,17 +143,17 @@ namespace ConstructionCppUnitTests
             schedule.addTask(task);
             Assert::AreEqual(100.0, schedule.getProgress(), 0.001);
             Assert::AreEqual(1, schedule.countDoneTasks());
-            schedule.passDays(12);
-            Assert::IsTrue(schedule.late);
-            schedule.addPlanDays(5);
-            Assert::IsFalse(schedule.late);
 
-            // Если passDays/addPlanDays затронули состояние расписания — убеждаемся, что прогресс 100%
-            if (schedule.getProgress() < 100.0) {
-                task.addProgress(100.0);
-                task.finishTask();
-                schedule.addTask(task);
-            }
+            WorkSchedule lateSchedule;
+            lateSchedule.planDays = 10;
+            Task unfinishedTask;
+            unfinishedTask.days = 10;
+            unfinishedTask.addProgress(40.0);
+            lateSchedule.addTask(unfinishedTask);
+            lateSchedule.passDays(12);
+            Assert::IsTrue(lateSchedule.late);
+            lateSchedule.addPlanDays(5);
+            Assert::IsFalse(lateSchedule.late);
 
             Project proj;
             proj.id = "PRJ-1";
