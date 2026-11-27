@@ -11,6 +11,7 @@ public:
 
     bool isSevere() const { return severity >= 4; }
     void addDay() { days++; }
+    bool isLong() const { return days >= 7; }
 };
 
 class Diagnosis {
@@ -33,6 +34,11 @@ public:
     void complete() {
         patient.checkValid();
         done = true;
+    }
+    void reschedule(const std::string& newDate) {
+        if (done) throw TimeConflictException("Appointment already completed");
+        if (newDate.empty()) throw InvalidPatientDataException();
+        date = newDate;
     }
 };
 

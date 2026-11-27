@@ -13,6 +13,7 @@ public:
         if (doneCount < count) doneCount++;
     }
     bool isFinished() const { return doneCount >= count; }
+    int leftCount() const { return count > doneCount ? count - doneCount : 0; }
 };
 
 class TherapyCourse {
@@ -25,6 +26,11 @@ public:
         if (daysPassed < daysTotal) daysPassed++;
     }
     int leftDays() const { return daysTotal - daysPassed; }
+    int progressPercent() const {
+        if (daysTotal <= 0) return 0;
+        int p = daysPassed * 100 / daysTotal;
+        return p > 100 ? 100 : p;
+    }
 };
 
 class TreatmentPlan {
@@ -37,6 +43,7 @@ public:
     void addProcedure(const Procedure& p) { procedures.push_back(p); }
     void addCourse(const TherapyCourse& c) { courses.push_back(c); }
     int proceduresCount() const { return static_cast<int>(procedures.size()); }
+    int coursesCount() const { return static_cast<int>(courses.size()); }
 };
 
 class RecoveryNote {
@@ -46,4 +53,5 @@ public:
     int score = 5; // 1..10
 
     bool isImproving() const { return score >= 7; }
+    bool isCritical() const { return score <= 3; }
 };

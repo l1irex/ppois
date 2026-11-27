@@ -10,6 +10,7 @@ public:
     std::string city;
 
     bool hasPhone() const { return phone.size() >= 7; }
+    bool hasEmail() const { return email.size() >= 5 && email.find('@') != std::string::npos; }
     std::string info() const { return city + ", " + phone; }
 };
 
@@ -23,6 +24,9 @@ public:
     void raiseLevel() {
         if (level < 5) level++;
     }
+    void lowerLevel() {
+        if (level > 1) level--;
+    }
 };
 
 class Vitals {
@@ -35,6 +39,7 @@ public:
     bool hasFever() const { return temp >= 37.5; }
     bool highPressure() const { return sysPressure >= 140 || diaPressure >= 90; }
     bool isBad() const { return temp >= 39.0 || pulse > 120 || sysPressure >= 170; }
+    bool isStable() const { return !hasFever() && !highPressure() && !isBad(); }
 };
 
 class Insurance {
@@ -48,6 +53,10 @@ public:
     void spend(double sum) {
         if (!canCover(sum)) throw InsuranceDeniedException();
         limit -= sum;
+    }
+    void topUp(double sum) {
+        if (!active || sum <= 0.0) throw InsuranceDeniedException();
+        limit += sum;
     }
 };
 
@@ -70,6 +79,12 @@ public:
             if (a.name == drug) return true;
         }
         return false;
+    }
+    int allergyLevel(const std::string& drug) const {
+        for (const auto& a : allergies) {
+            if (a.name == drug) return a.level;
+        }
+        return 0;
     }
     bool needsUrgentHelp() const { return vitals.isBad(); }
 };

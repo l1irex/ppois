@@ -28,6 +28,9 @@ public:
     void release() {
         if (freeBedsCount < totalBeds) freeBedsCount++;
     }
+    double occupancyRate() const {
+        return totalBeds > 0 ? static_cast<double>(totalBeds - freeBedsCount) / totalBeds : 0.0;
+    }
 };
 
 class MedDevice {
@@ -43,6 +46,7 @@ public:
     }
     void breakDevice() { working = false; }
     void repairDevice() { working = true; }
+    bool needsService() const { return hoursUsed >= 100; }
 };
 
 class Sterilizer {

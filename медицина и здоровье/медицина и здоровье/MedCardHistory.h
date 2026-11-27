@@ -12,6 +12,7 @@ public:
 
     int yearsSick(int nowYear) const { return nowYear >= startYear ? nowYear - startYear : 0; }
     void setRemission() { active = false; }
+    void relapse() { active = true; }
 };
 
 class Vaccination {
@@ -22,6 +23,10 @@ public:
 
     bool isValid(int nowYear) const { return nowYear <= yearDone + validYears; }
     void renew(int nowYear) { yearDone = nowYear; }
+    int yearsLeft(int nowYear) const {
+        int last = yearDone + validYears;
+        return nowYear <= last ? last - nowYear : 0;
+    }
 };
 
 class BodyMetrics {
@@ -35,6 +40,10 @@ public:
         return h > 0 ? weightKg / (h * h) : 0.0;
     }
     bool isOverweight() const { return bmi() >= 25.0; }
+    double idealWeight() const {
+        double h = heightCm / 100.0;
+        return h > 0 ? 22.0 * h * h : 0.0;
+    }
 };
 
 class MedCard {
@@ -50,6 +59,11 @@ public:
     int activeDiseasesCount() const {
         int c = 0;
         for (const auto& d : diseases) if (d.active) c++;
+        return c;
+    }
+    int validVaccinesCount(int nowYear) const {
+        int c = 0;
+        for (const auto& v : vaccines) if (v.isValid(nowYear)) c++;
         return c;
     }
 };

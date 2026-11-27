@@ -90,7 +90,7 @@ test support** components installed, then run it from Test Explorer.
 |---|---:|---:|
 | Classes | 50 | 48 domain classes + 14 exception classes = 62 |
 | Fields | 150 | 154 |
-| Unique domain behaviors | 100 | 85 |
+| Unique domain behaviors | 100 | 103 |
 | Associations | 30 | 38 |
 | Custom exceptions | 12 | 14 |
 
@@ -98,7 +98,8 @@ The behavior count includes every domain operation with logic (validation,
 calculation, state transition, compatibility check, aggregation, and so on).
 Constructors and trivial accessors are not counted separately; the model has no
 constructors, all objects are configured through public fields and initialized
-by in-class defaults.
+by in-class defaults. The exact distribution of the 103 unique behaviors is
+given in [Domain behavior catalog](#domain-behavior-catalog).
 
 ## OOP concepts demonstrated
 
@@ -152,28 +153,28 @@ method that detects the invalid state.
 
 ### Contact
 - Fields: `phone`, `email`, `city`
-- Methods: `hasPhone()`, `info()`
-- Behavior: checks that the phone has at least seven characters and formats city and phone.
+- Methods: `hasPhone()`, `hasEmail()`, `info()`
+- Behavior: checks that the phone has at least seven characters, accepts an email only when it is at least five characters long and contains `@`, and formats city and phone.
 
 ### Allergy
 - Fields: `name`, `reaction`, `level`
-- Methods: `isDangerous()`, `raiseLevel()`
-- Behavior: treats level `4` or `5` as dangerous and caps the level at `5`.
+- Methods: `isDangerous()`, `raiseLevel()`, `lowerLevel()`
+- Behavior: treats level `4` or `5` as dangerous, caps the level at `5`, and never lowers it below `1`.
 
 ### Vitals
 - Fields: `temp`, `pulse`, `sysPressure`, `diaPressure`
-- Methods: `hasFever()`, `highPressure()`, `isBad()`
-- Behavior: detects fever at `37.5`, high blood pressure at `140/90`, and critical state at `39.0`, pulse above `120`, or systolic pressure `170` or more.
+- Methods: `hasFever()`, `highPressure()`, `isBad()`, `isStable()`
+- Behavior: detects fever at `37.5`, high blood pressure at `140/90`, and critical state at `39.0`, pulse above `120`, or systolic pressure `170` or more; `isStable()` is true only when none of these conditions holds.
 
 ### Insurance
 - Fields: `number`, `company`, `limit`, `active`
-- Methods: `canCover(double)`, `spend(double)`
-- Behavior: checks active insurance and available limit, then spends from the limit or throws `InsuranceDeniedException`.
+- Methods: `canCover(double)`, `spend(double)`, `topUp(double)`
+- Behavior: checks active insurance and available limit, then spends from the limit or throws `InsuranceDeniedException`; `topUp` increases the limit only for an active policy and a positive amount.
 
 ### Patient
 - Fields: `id`, `name`, `age`, `contact`, `vitals`, `insurance`, `allergies`
-- Methods: `checkValid()`, `addAllergy(const Allergy&)`, `hasAllergy(const std::string&)`, `needsUrgentHelp()`
-- Behavior: validates ID, name, and age, manages allergies, and delegates urgency to `Vitals`.
+- Methods: `checkValid()`, `addAllergy(const Allergy&)`, `hasAllergy(const std::string&)`, `allergyLevel(const std::string&)`, `needsUrgentHelp()`
+- Behavior: validates ID, name, and age, manages allergies, returns the stored allergy level (`0` when absent), and delegates urgency to `Vitals`.
 
 ---
 
@@ -181,28 +182,28 @@ method that detects the invalid state.
 
 ### ChronicDisease
 - Fields: `code`, `title`, `startYear`, `active`
-- Methods: `yearsSick(int)`, `setRemission()`
-- Behavior: computes years since diagnosis and moves the disease into remission.
+- Methods: `yearsSick(int)`, `setRemission()`, `relapse()`
+- Behavior: computes years since diagnosis, moves the disease into remission, and returns it to the active state on relapse.
 
 ### Vaccination
 - Fields: `vaccineName`, `yearDone`, `validYears`
-- Methods: `isValid(int)`, `renew(int)`
-- Behavior: checks whether the vaccination is still valid and renews it in the given year.
+- Methods: `isValid(int)`, `renew(int)`, `yearsLeft(int)`
+- Behavior: checks whether the vaccination is still valid, renews it in the given year, and reports how many valid years remain.
 
 ### BodyMetrics
 - Fields: `heightCm`, `weightKg`, `bloodGroup`
-- Methods: `bmi()`, `isOverweight()`
-- Behavior: computes body mass index and detects a BMI of `25` or more.
+- Methods: `bmi()`, `isOverweight()`, `idealWeight()`
+- Behavior: computes body mass index, detects a BMI of `25` or more, and calculates the ideal weight for a BMI of `22`.
 
 ### MedCard
 - Fields: `cardId`, `patient`, `metrics`, `diseases`, `vaccines`
-- Methods: `addDisease(const ChronicDisease&)`, `addVaccine(const Vaccination&)`, `activeDiseasesCount()`
-- Behavior: stores medical history entries and counts active diseases.
+- Methods: `addDisease(const ChronicDisease&)`, `addVaccine(const Vaccination&)`, `activeDiseasesCount()`, `validVaccinesCount(int)`
+- Behavior: stores medical history entries, counts active diseases, and counts vaccinations that are still valid in a given year.
 
 ### Symptom
 - Fields: `name`, `days`, `severity`
-- Methods: `isSevere()`, `addDay()`
-- Behavior: treats severity `4` or `5` as severe and increments the duration.
+- Methods: `isSevere()`, `addDay()`, `isLong()`
+- Behavior: treats severity `4` or `5` as severe, increments the duration, and flags a symptom lasting `7` days or more as long.
 
 ### Diagnosis
 - Fields: `code`, `title`, `mainDiag`
@@ -211,8 +212,8 @@ method that detects the invalid state.
 
 ### Appointment
 - Fields: `id`, `patient`, `doctor`, `date`, `done`
-- Methods: `complete()`
-- Behavior: validates the patient before completing the appointment.
+- Methods: `complete()`, `reschedule(const std::string&)`
+- Behavior: validates the patient before completing the appointment and moves an unfinished appointment to a non-empty new date.
 
 ### SickLeave
 - Fields: `number`, `patient`, `days`, `closed`
@@ -235,13 +236,13 @@ method that detects the invalid state.
 
 ### WardRoom
 - Fields: `roomCode`, `totalBeds`, `freeBedsCount`
-- Methods: `hasFreeBed()`, `admit()`, `release()`
-- Behavior: admits a patient only when a free bed exists and releases beds up to total capacity.
+- Methods: `hasFreeBed()`, `admit()`, `release()`, `occupancyRate()`
+- Behavior: admits a patient only when a free bed exists, releases beds up to total capacity, and reports the share of occupied beds.
 
 ### MedDevice
 - Fields: `serial`, `name`, `working`, `hoursUsed`
-- Methods: `useDevice(int)`, `breakDevice()`, `repairDevice()`
-- Behavior: refuses to use a broken device, records positive usage hours, and toggles working state.
+- Methods: `useDevice(int)`, `breakDevice()`, `repairDevice()`, `needsService()`
+- Behavior: refuses to use a broken device, records positive usage hours, toggles working state, and flags service after `100` hours.
 
 ### Sterilizer
 - Fields: `deviceId`, `tempC`, `cycleDone`
@@ -250,23 +251,23 @@ method that detects the invalid state.
 
 ### Procedure
 - Fields: `title`, `count`, `doneCount`
-- Methods: `markOneDone()`, `isFinished()`
-- Behavior: records completed procedures without exceeding the planned count.
+- Methods: `markOneDone()`, `isFinished()`, `leftCount()`
+- Behavior: records completed procedures without exceeding the planned count and reports how many are left.
 
 ### TherapyCourse
 - Fields: `name`, `daysTotal`, `daysPassed`
-- Methods: `passDay()`, `leftDays()`
-- Behavior: advances the course up to its total duration and reports remaining days.
+- Methods: `passDay()`, `leftDays()`, `progressPercent()`
+- Behavior: advances the course up to its total duration, reports remaining days, and computes completion percentage capped at `100`.
 
 ### TreatmentPlan
 - Fields: `planId`, `diagnosis`, `procedures`, `courses`
-- Methods: `addProcedure(const Procedure&)`, `addCourse(const TherapyCourse&)`, `proceduresCount()`
-- Behavior: manages procedures and therapy courses and counts procedures.
+- Methods: `addProcedure(const Procedure&)`, `addCourse(const TherapyCourse&)`, `proceduresCount()`, `coursesCount()`
+- Behavior: manages procedures and therapy courses and counts both collections.
 
 ### RecoveryNote
 - Fields: `date`, `note`, `score`
-- Methods: `isImproving()`
-- Behavior: treats a recovery score of `7` or more as improvement.
+- Methods: `isImproving()`, `isCritical()`
+- Behavior: treats a recovery score of `7` or more as improvement and `3` or less as a critical condition.
 
 ---
 
@@ -413,6 +414,64 @@ method that detects the invalid state.
 - Fields: `centerName`, `patients`, `departments`, `cashDesk`
 - Methods: `addPatient(const Patient&)`, `findPatientById(const std::string&)`, `addDepartment(const Department&)`, `totalPatients()`
 - Behavior: adds validated patients, looks up a patient by ID or throws `PatientNotFoundException`, adds departments, and counts patients.
+
+---
+
+## Domain behavior catalog
+
+The 103 unique domain behaviors are distributed across the model as follows.
+
+| Class | Behaviors | Count |
+|---|---|---:|
+| `Contact` | `hasPhone`, `hasEmail`, `info` | 3 |
+| `Allergy` | `isDangerous`, `raiseLevel`, `lowerLevel` | 3 |
+| `Vitals` | `hasFever`, `highPressure`, `isBad`, `isStable` | 4 |
+| `Insurance` | `canCover`, `spend`, `topUp` | 3 |
+| `Patient` | `checkValid`, `addAllergy`, `hasAllergy`, `allergyLevel`, `needsUrgentHelp` | 5 |
+| `ChronicDisease` | `yearsSick`, `setRemission`, `relapse` | 3 |
+| `Vaccination` | `isValid`, `renew`, `yearsLeft` | 3 |
+| `BodyMetrics` | `bmi`, `isOverweight`, `idealWeight` | 3 |
+| `MedCard` | `addDisease`, `addVaccine`, `activeDiseasesCount`, `validVaccinesCount` | 4 |
+| `Symptom` | `isSevere`, `addDay`, `isLong` | 3 |
+| `Diagnosis` | `fullText` | 1 |
+| `Appointment` | `complete`, `reschedule` | 2 |
+| `SickLeave` | `extend`, `closeSheet` | 2 |
+| `Referral` | `useReferral` | 1 |
+| `HospitalBed` | `occupy`, `freeBed` | 2 |
+| `WardRoom` | `hasFreeBed`, `admit`, `release`, `occupancyRate` | 4 |
+| `MedDevice` | `useDevice`, `breakDevice`, `repairDevice`, `needsService` | 4 |
+| `Sterilizer` | `runCycle` | 1 |
+| `Procedure` | `markOneDone`, `isFinished`, `leftCount` | 3 |
+| `TherapyCourse` | `passDay`, `leftDays`, `progressPercent` | 3 |
+| `TreatmentPlan` | `addProcedure`, `addCourse`, `proceduresCount`, `coursesCount` | 4 |
+| `RecoveryNote` | `isImproving`, `isCritical` | 2 |
+| `MedLicense` | `isValid`, `bonusRate` | 2 |
+| `Staff` | `totalSalary`, `setBusy` | 2 |
+| `Doctor` | `takePatient`, `freeSlots` | 2 |
+| `Surgeon` | `doOperation` | 1 |
+| `Nurse` | `giveInjection` | 1 |
+| `Dentist` | `treatTooth` | 1 |
+| `Pharmacist` | `issueDrug` | 1 |
+| `Receptionist` | `bookVisit` | 1 |
+| `LabWorker` | `checkSample` | 1 |
+| `LabSample` | `spoil`, `check` | 2 |
+| `BloodTest` | `isNormal` | 1 |
+| `UrineTest` | `isClean` | 1 |
+| `XRayScan` | `summary` | 1 |
+| `LabOrder` | `completeOrder` | 1 |
+| `Medicine` | `costFor` | 1 |
+| `DrugStock` | `isLow`, `takeDrug`, `addDrug` | 3 |
+| `Prescription` | `verifyForPatient` | 1 |
+| `DrugSupplier` | `supplyStock` | 1 |
+| `Bill` | `setAmount`, `markPaid` | 2 |
+| `CashDesk` | `acceptCash`, `refundCash` | 2 |
+| `InsuranceClaim` | `processClaim` | 1 |
+| `DiscountCard` | `applyDiscount` | 1 |
+| `SanitaryCheck` | `failCheck` | 1 |
+| `QualityReport` | `addComplaint`, `resolveOne`, `openComplaints` | 3 |
+| `Department` | `closeDept`, `openDept` | 2 |
+| `MedicalCenter` | `addPatient`, `findPatientById`, `addDepartment`, `totalPatients` | 4 |
+| **Total** | | **103** |
 
 ---
 
